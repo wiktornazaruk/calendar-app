@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useContext, useEffect } from "react";
+import "./App.css";
+import { getMonth } from "./util/util.js";
+import CalendarHeader from "./components/CalendarHeader";
+import Sidebar from "./components/Sidebar";
+import Month from "./components/Month";
+import GlobalContext from "./context/GlobalContext";
+import EventModel from "./components/EventModel";
 
 function App() {
+  const [currMonth, setCurrMonth] = useState(getMonth());
+  const { monthIndex, showEventModel } = useContext(GlobalContext);
+  useEffect(() => {
+    setCurrMonth(getMonth(monthIndex));
+  }, [monthIndex]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      {showEventModel && <EventModel />}
+      <div className="h-screen flex flex-col bg-slate-800 text-white">
+        <CalendarHeader />
+        <div className="flex flex-1">
+          <Sidebar />
+          <Month month={currMonth} />
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 
