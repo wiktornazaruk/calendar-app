@@ -36,8 +36,8 @@ export default function ContextWrapper(props) {
     return savedEvents.filter((event) =>
       labels
         .filter((lbl) => lbl.checked)
-        .map((lbl) => lbl.color)
-        .includes(event.color)
+        .map((lbl) => lbl.bg_color)
+        .includes(event.bg_color)
     );
   }, [savedEvents, labels]);
 
@@ -47,11 +47,11 @@ export default function ContextWrapper(props) {
 
   useEffect(() => {
     setLabels((prevLabels) => {
-      return [...new Set(savedEvents.map((event) => event.color))].map(
-        (color) => {
-          const currLabel = prevLabels.find((lbl) => lbl.color === color);
+      return [...new Set(savedEvents.map((event) => event.bg_color))].map(
+        (bg_color) => {
+          const currLabel = prevLabels.find((lbl) => lbl.bg_color === bg_color);
           return {
-            color,
+            bg_color,
             checked: currLabel ? currLabel.checked : true,
           };
         }
@@ -65,8 +65,10 @@ export default function ContextWrapper(props) {
     }
   }, [smallCalendarMonth]);
 
-  function updateLabel(color) {
-    setLabels(labels.map((lbl) => (lbl.color === color.color ? color : lbl)));
+  function updateLabel(bg_color) {
+    setLabels(
+      labels.map((lbl) => (lbl.bg_color === bg_color.bg_color ? bg_color : lbl))
+    );
   }
 
   useEffect(() => {

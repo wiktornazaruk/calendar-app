@@ -1,7 +1,15 @@
 import React, { useContext, useState } from "react";
 import GlobalContext from "../context/GlobalContext";
 
-const colors = ["indigo", "green", "yellow", "red", "orange", "pink", "blue"];
+const bg_colors = [
+  "bg-indigo-500",
+  "bg-green-500",
+  "bg-yellow-500",
+  "bg-red-500",
+  "bg-orange-500",
+  "bg-pink-500",
+  "bg-blue-500",
+];
 
 export default function EventModel() {
   const { setShowEventModel, daySelected, dispatchCalEvent, selectedEvent } =
@@ -12,8 +20,8 @@ export default function EventModel() {
   );
   const [selectedColor, setSelectedColor] = useState(
     selectedEvent
-      ? colors.find((color) => color === selectedEvent.color)
-      : colors[0]
+      ? bg_colors.find((bg_color) => bg_color === selectedEvent.bg_color)
+      : bg_colors[0]
   );
 
   function handleSubmit(e) {
@@ -21,7 +29,7 @@ export default function EventModel() {
     const calendarEvent = {
       title,
       description,
-      color: selectedColor,
+      bg_color: selectedColor,
       day: daySelected.valueOf(),
       id: selectedEvent ? selectedEvent.id : Date.now(),
     };
@@ -116,11 +124,11 @@ export default function EventModel() {
                 bookmark_border
               </span>
               <div className="align-middle flex gap-x-2">
-                {colors.map((col, i) => (
+                {bg_colors.map((col, i) => (
                   <span
                     onClick={() => setSelectedColor(col)}
                     key={i}
-                    className={`bg-${col}-500 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer`}
+                    className={`${col} w-6 h-6 rounded-full flex items-center justify-center cursor-pointer`}
                   >
                     {selectedColor === col && (
                       <span className="material-icons-outlined text-white text-sm">
